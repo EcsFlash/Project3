@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream> 
+#include <sstream> 
+using namespace std;
 
 template<typename T>
 class Stack {
@@ -25,7 +28,9 @@ public:
 		return top == nullptr;
 	}
 	T peek() {
-		return top->data;
+		if (!isEmpty()) {
+			return top->data;
+		}
 	}
 	void push(T elem) {
 		if (isEmpty()) {
@@ -46,6 +51,23 @@ public:
 	}
 	~Stack() {
 		clear();
+	}
+	Stack(const Stack& other) {
+		top = nullptr;
+		Node* temp = other.top;
+		while (temp != nullptr) {
+			enque(temp->data);
+			temp = temp->next;
+		}
+	}
+	Stack& operator=(const Stack& other) {
+		top = nullptr;
+		Node* temp = other.top;
+		while (temp != nullptr) {
+			enque(temp->data);
+			temp = temp->next;
+		}
+		return *this;
 	}
 	friend ostream& operator<<(ostream& os, const Stack& a) {
 		stringstream ss;

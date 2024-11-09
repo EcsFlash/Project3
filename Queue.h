@@ -50,24 +50,29 @@ public:
 	// } 
 
 
-	void deque() {
+	void deque(){
+		cout << head << '\t' << tail << endl;
+		cout << isEmpty() << endl;
 		if (!isEmpty()) {
-			Node* p = head;
-			head = head->next;
-			delete p;
-			p = nullptr;
-			count--;
+			if (head != tail) {
+				Node* p = head;
+				head = head->next;
+				delete p;
+				p = nullptr;
+				count--;
+			}else {
+				delete head, tail;
+				head = tail = nullptr;
+			}
 		}
 	}
 
 	Queue(const Queue<datatype1>& other) {
 		head = tail = nullptr;
-		cout << 1 << '\n';
 		count = 0;
 		Node* temp = other.head;
 		while (temp != nullptr) {
 			this->enque(temp->data);
-			cout << temp->data << endl;
 			temp = temp->next;
 		}
 	}
@@ -76,7 +81,6 @@ public:
 
 	Queue& operator=(const Queue& other) {
 		head = tail = nullptr;
-		cout << 1;
 		count = 0;
 		Node* temp = other.head;
 		while (temp != nullptr) {
@@ -97,7 +101,9 @@ public:
 	}
 
 	datatype1 peek() {
-		return head->data;
+		if (!isEmpty()) {
+			return head->data;
+		}
 	}
 
 
@@ -113,7 +119,7 @@ public:
 			deque();
 		}
 	}
-	friend ostream& operator<<(ostream& os, const Queue& a) {
+	friend std::ostream& operator<<(std::ostream& os, const Queue& a) {
 		stringstream ss;
 		Node* temp = a.head;
 
